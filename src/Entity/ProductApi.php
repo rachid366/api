@@ -6,36 +6,40 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ProductApiRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     attributtes={
- *         "order"={"nom":"rachid"}
- *     },
- *     normalizationContext={"groups"="read:book"}},
- *     collectionOperations={"get","post"},
- *     itemOperations={"get","put","delete","post"}
- * )
  * @ORM\Entity(repositoryClass=ProductApiRepository::class)
- * @ApiFilter(SearchFilter::class, properties={"nom": "partial"})
+ * @ApiResource(
+ *     attributes={
+ *       "order"={"nom":"DESC"}
+ *     },
+ *     normalizationContext={"groups"={"read:productapi"}},
+ *     collectionOperations={"get","post"},
+ *     itemOperations={"post","get","put","delete"}
+ * )
+ * @ApiFilter(SearchFilter::class,properties={"nom":"partial"})
  */
+
 class ProductApi
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:productapi"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read:productapi"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"read:productapi"})
      */
     private $prix;
 
